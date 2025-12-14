@@ -27,10 +27,14 @@ body {
 }
 
 .sidebar {
-    width: 250px;
+    width: 300px;
     background-color: #C4A484;
     opacity: 0.9;
     box-shadow: 9px 4px 6px -1px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+    align-items: center;
 }
 
 h1 {
@@ -66,4 +70,52 @@ h1 {
 .book p:first-child {
     font-weight: 600;
     font-size: 14px;
+}
+
+img {
+    height: 30px;
+}
+
+button {
+    background-color: #B87C4C;
+    height: 80px;
+    width: 140px;
+    font-size: 18px;
+    font-weight: 600;
+    padding-top: 8px;
+    border-radius: 10px; 
+}
+
+form { 
+    background-color: #A8BBA3;
+    padding: 10px;
+    box-shadow: 6px 10px 6px -1px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    display: none;
+}
+
+form div {
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+    
+
+}
+
+form button {
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input {
+    border-style: none;
+    border-radius: 5px;
+    max-width: 300px;
+    padding-left: 8px;
 }

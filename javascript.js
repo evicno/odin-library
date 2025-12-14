@@ -71,10 +71,10 @@ function displayLibrary(libraryArray) {
         introRead.textContent = "Read";
         readDiv.appendChild(introRead);
         if (libraryArray[i].read) {
-            read.textContent = "Yes";
+            read.textContent = "yes";
         }
         else {
-            read.textContent = "No";
+            read.textContent = "no";
         }
         readDiv.appendChild(read);
         bookDiv.appendChild(readDiv);
@@ -91,3 +91,8 @@ addBookToLibrary("Les cafards", "Jo Nesbo", "500");
 console.log(myLibrary);
 const library = document.querySelector(".library");
 displayLibrary(myLibrary);
+const button = document.querySelector("button");
+const form = document.querySelector("form");
+button.addEventListener("click", ()=> {
+    form.style.display = "flex";
+})
