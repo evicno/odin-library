@@ -11,13 +11,20 @@ function Book(title, author, pages, read = false) {
         this.id = crypto.randomUUID();
 }
 
-function addBookToLibrary(title, author, pages) {
-    let book = new Book(title, author, pages);
+function addBookToLibrary(title, author, pages, read) {
+    let book = new Book(title, author, pages, read);
+    console.log(book);
     myLibrary.push(book);
 }
 
-function displayLibrary(libraryArray) {
-    for (let i = 0; i < libraryArray.length; i++) {
+function displayLibrary() {
+    // Clear the content of the .library div
+    const library = document.querySelector(".library");
+    while (library.firstChild) {
+        library.removeChild(library.firstChild)
+    }
+    
+    for (let i = 0; i < myLibrary.length; i++) {
         // Create a new book div
         let bookDiv = document.createElement("div");
         bookDiv.classList.add("book");
@@ -49,28 +56,28 @@ function displayLibrary(libraryArray) {
         // Add content to titleDiv and append it to bookDiv
         introTitle.textContent = "Title";
         titleDiv.appendChild(introTitle);
-        title.textContent = libraryArray[i].title;
+        title.textContent = myLibrary[i].title;
         titleDiv.appendChild(title);
         bookDiv.appendChild(titleDiv);
         
         // Add content to authorDiv and append it to bookDiv
         introAuthor.textContent = "Author";
         authorDiv.appendChild(introAuthor);
-        author.textContent = libraryArray[i].author;
+        author.textContent = myLibrary[i].author;
         authorDiv.appendChild(author);
         bookDiv.appendChild(authorDiv);
 
         // Add content to pagesDiv and append it to bookDiv   
         introPages.textContent = "Pages";
         pagesDiv.appendChild(introPages);
-        pages.textContent = libraryArray[i].pages;
+        pages.textContent = myLibrary[i].pages;
         pagesDiv.appendChild(pages);
         bookDiv.appendChild(pagesDiv);
 
         // Add content to readDiv and append it to bookDiv
         introRead.textContent = "Read";
         readDiv.appendChild(introRead);
-        if (libraryArray[i].read) {
+        if (myLibrary[i].read == "true") {
             read.textContent = "yes";
         }
         else {
@@ -85,14 +92,29 @@ function displayLibrary(libraryArray) {
 }
 
 
-addBookToLibrary("Mon frère", "Daniel Pennac", "140");
-addBookToLibrary("Christine", "Stephen King", "410");
-addBookToLibrary("Les cafards", "Jo Nesbo", "500");
+// addBookToLibrary("Mon frère", "Daniel Pennac", "140");
+// addBookToLibrary("Christine", "Stephen King", "410");
+// addBookToLibrary("Les cafards", "Jo Nesbo", "500");
 console.log(myLibrary);
 const library = document.querySelector(".library");
-displayLibrary(myLibrary);
-const button = document.querySelector("button");
+displayLibrary();
+const newBook = document.querySelector("button");
 const form = document.querySelector("form");
-button.addEventListener("click", ()=> {
+newBook.addEventListener("click", ()=> {
     form.style.display = "flex";
+})
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+    const title = document.getElementById("title").value;
+    const author = document.getElementById("author").value;
+    const pages = document.getElementById("pages").value;
+    const read = document.querySelector("input[name='book-read']:checked").value;
+    addBookToLibrary(title, author, pages, read);
+    displayLibrary();
+    form.style.display = "none";
+    // Clear the form after adding book
+    document.getElementById("title").value = "";
+    document.getElementById("author").value = "";
+    document.getElementById("pages").value = "";
+    document.getElementById("not-read").checked = "false";
 })

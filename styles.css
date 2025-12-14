@@ -23,11 +23,11 @@ body {
     width: 100vw;
     height: 100vh;
     display: flex;
-
 }
 
 .sidebar {
     width: 300px;
+    flex-shrink: 0;
     background-color: #C4A484;
     opacity: 0.9;
     box-shadow: 9px 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -38,13 +38,17 @@ body {
 }
 
 h1 {
-    margin-top: 10px;
+    margin-top: 20px;
     /* color: #B87C4C; */
     font-size: 40px;
     font-weight: 800;
     text-align: center;
 }
 
+.library {
+    display: flex;
+    flex-wrap: wrap;
+}
 .book {
     display: grid;
     grid-template-rows: repeat(4, 1fr);
@@ -77,6 +81,7 @@ img {
 }
 
 button {
+    flex: 0;
     background-color: #B87C4C;
     height: 80px;
     width: 140px;
