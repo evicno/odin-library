@@ -13,7 +13,6 @@ function Book(title, author, pages, read = false) {
 
 function addBookToLibrary(title, author, pages, read) {
     let book = new Book(title, author, pages, read);
-    console.log(book);
     myLibrary.push(book);
 }
 
@@ -25,9 +24,10 @@ function displayLibrary() {
     }
     
     for (let i = 0; i < myLibrary.length; i++) {
-        // Create a new book div
+        // Create a new book div and add id to it
         let bookDiv = document.createElement("div");
         bookDiv.classList.add("book");
+
 
         // Create new elements about title
         let titleDiv = document.createElement("div");
@@ -47,11 +47,13 @@ function displayLibrary() {
         let introPages = document.createElement("p");
         let pages = document.createElement("p");
 
-        // Create new elements about read
+        // Create new elements about read and remove button
         let readDiv = document.createElement("div");
         readDiv.classList.add("read");
         let introRead = document.createElement("p");
         let read = document.createElement("p");
+        let removeButton = document.createElement("button");
+        removeButton.dataset.id = myLibrary[i].id;
 
         // Add content to titleDiv and append it to bookDiv
         introTitle.textContent = "Title";
@@ -74,7 +76,7 @@ function displayLibrary() {
         pagesDiv.appendChild(pages);
         bookDiv.appendChild(pagesDiv);
 
-        // Add content to readDiv and append it to bookDiv
+        // Add content and removeButton to readDiv and append it to bookDiv
         introRead.textContent = "Read";
         readDiv.appendChild(introRead);
         if (myLibrary[i].read == "true") {
@@ -84,25 +86,41 @@ function displayLibrary() {
             read.textContent = "no";
         }
         readDiv.appendChild(read);
+        removeButton.textContent = "remove";
+        readDiv.appendChild(removeButton);
         bookDiv.appendChild(readDiv);
 
         // Add bookDiv to library
         library.appendChild(bookDiv);
+
+        // Create addEventListener to remove book
+        removeButton.addEventListener("click", ()=> {
+        for (let i = 0; i < myLibrary.length; i++) {
+            if (myLibrary[i].id == removeButton.dataset.id) {
+                myLibrary.splice(i, 1);
+                break;
+            }
+        }
+        displayLibrary();
+        })
+
     }
 }
 
-
-// addBookToLibrary("Mon frère", "Daniel Pennac", "140");
+addBookToLibrary("Mon frère", "Daniel Pennac", "140");
 // addBookToLibrary("Christine", "Stephen King", "410");
 // addBookToLibrary("Les cafards", "Jo Nesbo", "500");
-console.log(myLibrary);
 const library = document.querySelector(".library");
 displayLibrary();
 const newBook = document.querySelector("button");
 const form = document.querySelector("form");
+
+// New book button clicked
 newBook.addEventListener("click", ()=> {
     form.style.display = "flex";
 })
+
+// Submit form
 form.addEventListener("submit", function(event) {
     event.preventDefault();
     const title = document.getElementById("title").value;
