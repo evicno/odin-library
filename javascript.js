@@ -10,11 +10,11 @@ function Book(title, author, pages, read = false) {
         this.read = read;
         this.id = crypto.randomUUID();
         this.toggleRead = function() {
-            if (this.read == true) {
-                this.read = false;
+            if (this.read === "true") {
+                this.read = "false";
             }
             else {
-                this.read = true;
+                this.read = "true";
             }
         }
 }
@@ -95,13 +95,13 @@ function displayLibrary() {
 
         // Update readButton content
         function updateReadButtonContent(book) {
-            if (book.read == true) {
+            if (book.read === "true") {
                 readButton.textContent = "read";
-                readButton.dataset.read = true;
+                readButton.dataset.read = "true";
             }
             else {
                 readButton.textContent = "not read";
-                readButton.dataset.read = false;
+                readButton.dataset.read = "false";
                 }
         }
 
@@ -141,6 +141,7 @@ form.addEventListener("submit", function(event) {
     const pages = document.getElementById("pages").value;
     const read = document.querySelector("input[name='book-read']:checked").value;
     addBookToLibrary(title, author, pages, read);
+    console.log(read);
     displayLibrary();
     form.style.display = "none";
     // Clear the form after adding book
