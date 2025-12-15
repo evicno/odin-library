@@ -9,6 +9,14 @@ function Book(title, author, pages, read = false) {
         this.pages = pages;
         this.read = read;
         this.id = crypto.randomUUID();
+        this.toggleRead = function() {
+            if (this.read == true) {
+                this.read = false;
+            }
+            else {
+                this.read = true;
+            }
+        }
 }
 
 function addBookToLibrary(title, author, pages, read) {
@@ -47,11 +55,10 @@ function displayLibrary() {
         let introPages = document.createElement("p");
         let pages = document.createElement("p");
 
-        // Create new elements about read and remove button
-        let readDiv = document.createElement("div");
-        readDiv.classList.add("read");
-        let introRead = document.createElement("p");
-        let read = document.createElement("p");
+        // Create new elements about read and remove buttons
+        let buttonsDiv = document.createElement("div");
+        buttonsDiv.classList.add("book-buttons");
+        let readButton = document.createElement("button");
         let removeButton = document.createElement("button");
         removeButton.dataset.id = myLibrary[i].id;
 
@@ -76,22 +83,38 @@ function displayLibrary() {
         pagesDiv.appendChild(pages);
         bookDiv.appendChild(pagesDiv);
 
-        // Add content and removeButton to readDiv and append it to bookDiv
-        introRead.textContent = "Read";
-        readDiv.appendChild(introRead);
+        // Add readButton and removeButton to readDiv and append it to bookDiv
+        
         if (myLibrary[i].read == "true") {
-            read.textContent = "yes";
+            readButton.textContent = "read";
+            readButton.dataset.read = true;
         }
         else {
-            read.textContent = "no";
+            readButton.textContent = "not read";
+            readButton.dataset.read = false;
         }
-        readDiv.appendChild(read);
+        buttonsDiv.appendChild(readButton);
         removeButton.textContent = "remove";
-        readDiv.appendChild(removeButton);
-        bookDiv.appendChild(readDiv);
+        buttonsDiv.appendChild(removeButton);
+        bookDiv.appendChild(buttonsDiv);
 
         // Add bookDiv to library
         library.appendChild(bookDiv);
+
+        // Create addEventListener to toggle read status
+        readButton.addEventListener("click", ()=> {
+            console.log(i);
+            myLibrary[i].toggleRead();
+            console.log(myLibrary[i].read);
+            if (myLibrary[i].read == true) {
+                readButton.textContent = "read";
+                readButton.dataset.read = true;
+            }
+            else {
+                readButton.textContent = "not read";
+                readButton.dataset.read = false;
+            }
+        })
 
         // Create addEventListener to remove book
         removeButton.addEventListener("click", ()=> {

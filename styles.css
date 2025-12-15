@@ -51,7 +51,7 @@ h1 {
 }
 .book {
     display: grid;
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 35px) 45px;
     width: 300px;
     border-radius: 10px;
     border: 1px solid #A8BBA3;
@@ -65,16 +65,16 @@ h1 {
 .author,
 .pages {
     display: grid;
-    grid-template-columns: 60px 240px;
+    grid-template-columns: 60px 210px;
     gap: 8px;
     align-items: center;
 }
 
-.read {
+.book-buttons {
     display: grid;
-    grid-template-columns: 60px 60px 140px;
-    gap: 8px;
-    align-items: center;
+    grid-template-columns: 120px 120px;
+    gap: 20px;
+    padding: 12px 16px; 
 }
 
 .book p:first-child {
@@ -97,15 +97,19 @@ button {
     border-radius: 10px; 
 }
 
-.book button {
-    height: 40px;
-    width: 100px;
-    background-color: #C4A484;
-    text-align: center;
+.book-buttons button {
     display: flex;
-    flex-direction: column;
+    height: 30px;
+    width: 100px;
+    font-size: 16px;
+    background-color: #C4A484;
     align-items: center;
-    justify-self: end;
+    justify-content: center; 
+    padding-bottom: 6px;
+}
+
+.book-buttons button[data-read="true"] {
+    background-color: #B87C4C;
 }
 
 form { 
