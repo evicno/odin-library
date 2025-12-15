@@ -31,11 +31,11 @@ function displayLibrary() {
         library.removeChild(library.firstChild)
     }
     
+    // Loop through myLibrary to display each book
     for (let i = 0; i < myLibrary.length; i++) {
         // Create a new book div and add id to it
         let bookDiv = document.createElement("div");
         bookDiv.classList.add("book");
-
 
         // Create new elements about title
         let titleDiv = document.createElement("div");
@@ -84,15 +84,7 @@ function displayLibrary() {
         bookDiv.appendChild(pagesDiv);
 
         // Add readButton and removeButton to readDiv and append it to bookDiv
-        
-        if (myLibrary[i].read == "true") {
-            readButton.textContent = "read";
-            readButton.dataset.read = true;
-        }
-        else {
-            readButton.textContent = "not read";
-            readButton.dataset.read = false;
-        }
+        updateReadButtonContent(myLibrary[i]);
         buttonsDiv.appendChild(readButton);
         removeButton.textContent = "remove";
         buttonsDiv.appendChild(removeButton);
@@ -101,19 +93,22 @@ function displayLibrary() {
         // Add bookDiv to library
         library.appendChild(bookDiv);
 
-        // Create addEventListener to toggle read status
-        readButton.addEventListener("click", ()=> {
-            console.log(i);
-            myLibrary[i].toggleRead();
-            console.log(myLibrary[i].read);
-            if (myLibrary[i].read == true) {
+        // Update readButton content
+        function updateReadButtonContent(book) {
+            if (book.read == true) {
                 readButton.textContent = "read";
                 readButton.dataset.read = true;
             }
             else {
                 readButton.textContent = "not read";
                 readButton.dataset.read = false;
-            }
+                }
+        }
+
+        // Create addEventListener to toggle read status
+        readButton.addEventListener("click", ()=> {
+            myLibrary[i].toggleRead();
+            updateReadButtonContent(myLibrary[i]);
         })
 
         // Create addEventListener to remove book
@@ -126,15 +121,10 @@ function displayLibrary() {
         }
         displayLibrary();
         })
-
     }
 }
 
-addBookToLibrary("Mon frère", "Daniel Pennac", "140");
-// addBookToLibrary("Christine", "Stephen King", "410");
-// addBookToLibrary("Les cafards", "Jo Nesbo", "500");
 const library = document.querySelector(".library");
-displayLibrary();
 const newBook = document.querySelector("button");
 const form = document.querySelector("form");
 
