@@ -1,21 +1,16 @@
 const myLibrary = [];
 
-function Book(title, author, pages, read = false) {
-        if (!new.target) {
-            throw Error("You must use the 'new' operator to call the constructor.")
+class Book {
+        constructor(title, author, pages, read) {
+            this.title = title;
+            this.author = author;
+            this.pages = pages;
+            this.read = read;
+            this.id = crypto.randomUUID();
         }
-        this.title = title;
-        this.author = author;
-        this.pages = pages;
-        this.read = read;
-        this.id = crypto.randomUUID();
-        this.toggleRead = function() {
-            if (this.read === "true") {
-                this.read = "false";
-            }
-            else {
-                this.read = "true";
-            }
+        
+        toggleRead() {
+            this.read = !this.read;
         }
 }
 
@@ -95,7 +90,7 @@ function displayLibrary() {
 
         // Update readButton content
         function updateReadButtonContent(book) {
-            if (book.read === "true") {
+            if (book.read === true) {
                 readButton.textContent = "read";
                 readButton.dataset.read = "true";
             }
@@ -139,9 +134,8 @@ form.addEventListener("submit", function(event) {
     const title = document.getElementById("title").value;
     const author = document.getElementById("author").value;
     const pages = document.getElementById("pages").value;
-    const read = document.querySelector("input[name='book-read']:checked").value;
+    const read = (document.querySelector("input[name='book-read']:checked").value === "true");
     addBookToLibrary(title, author, pages, read);
-    console.log(read);
     displayLibrary();
     form.style.display = "none";
     // Clear the form after adding book
