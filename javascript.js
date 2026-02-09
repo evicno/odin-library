@@ -1,146 +1,163 @@
 const myLibrary = [];
 
 class Book {
-        constructor(title, author, pages, read) {
-            this.title = title;
-            this.author = author;
-            this.pages = pages;
-            this.read = read;
-            this.id = crypto.randomUUID();
-        }
-        
-        toggleRead() {
-            this.read = !this.read;
-        }
+  constructor(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+    this.id = crypto.randomUUID();
+  }
+
+  toggleRead() {
+    this.read = !this.read;
+  }
 }
 
 function addBookToLibrary(title, author, pages, read) {
-    let book = new Book(title, author, pages, read);
-    myLibrary.push(book);
+  let book = new Book(title, author, pages, read);
+  myLibrary.push(book);
 }
 
 function displayLibrary() {
-    // Clear the content of the .library div
-    const library = document.querySelector(".library");
-    while (library.firstChild) {
-        library.removeChild(library.firstChild)
+  // Clear the content of the .library div
+  const library = document.querySelector('.library');
+  while (library.firstChild) {
+    library.removeChild(library.firstChild);
+  }
+
+  // Loop through myLibrary to display each book
+  for (let i = 0; i < myLibrary.length; i++) {
+    // Create a new book div and add id to it
+    let bookDiv = document.createElement('div');
+    bookDiv.classList.add('book');
+
+    // Create new elements about title
+    let titleDiv = document.createElement('div');
+    titleDiv.classList.add('book-title');
+    let introTitle = document.createElement('p');
+    let title = document.createElement('p');
+
+    // Create new elements about author
+    let authorDiv = document.createElement('div');
+    authorDiv.classList.add('book-author');
+    let introAuthor = document.createElement('p');
+    let author = document.createElement('p');
+
+    // Create new elements about pages
+    let pagesDiv = document.createElement('div');
+    pagesDiv.classList.add('book-pages');
+    let introPages = document.createElement('p');
+    let pages = document.createElement('p');
+
+    // Create new elements about read and remove buttons
+    let buttonsDiv = document.createElement('div');
+    buttonsDiv.classList.add('book-buttons');
+    let readButton = document.createElement('button');
+    let removeButton = document.createElement('button');
+    removeButton.dataset.id = myLibrary[i].id;
+
+    // Add content to titleDiv and append it to bookDiv
+    introTitle.textContent = 'Title';
+    titleDiv.appendChild(introTitle);
+    title.textContent = myLibrary[i].title;
+    titleDiv.appendChild(title);
+    bookDiv.appendChild(titleDiv);
+
+    // Add content to authorDiv and append it to bookDiv
+    introAuthor.textContent = 'Author';
+    authorDiv.appendChild(introAuthor);
+    author.textContent = myLibrary[i].author;
+    authorDiv.appendChild(author);
+    bookDiv.appendChild(authorDiv);
+
+    // Add content to pagesDiv and append it to bookDiv
+    introPages.textContent = 'Pages';
+    pagesDiv.appendChild(introPages);
+    pages.textContent = myLibrary[i].pages;
+    pagesDiv.appendChild(pages);
+    bookDiv.appendChild(pagesDiv);
+
+    // Add readButton and removeButton to readDiv and append it to bookDiv
+    updateReadButtonContent(myLibrary[i]);
+    buttonsDiv.appendChild(readButton);
+    removeButton.textContent = 'remove';
+    buttonsDiv.appendChild(removeButton);
+    bookDiv.appendChild(buttonsDiv);
+
+    // Add bookDiv to library
+    library.appendChild(bookDiv);
+
+    // Update readButton content
+    function updateReadButtonContent(book) {
+      if (book.read === true) {
+        readButton.textContent = 'read';
+        readButton.dataset.read = 'true';
+      } else {
+        readButton.textContent = 'not read';
+        readButton.dataset.read = 'false';
+      }
     }
-    
-    // Loop through myLibrary to display each book
-    for (let i = 0; i < myLibrary.length; i++) {
-        // Create a new book div and add id to it
-        let bookDiv = document.createElement("div");
-        bookDiv.classList.add("book");
 
-        // Create new elements about title
-        let titleDiv = document.createElement("div");
-        titleDiv.classList.add("title");
-        let introTitle = document.createElement("p");
-        let title = document.createElement("p");
-        
-        // Create new elements about author
-        let authorDiv = document.createElement("div");
-        authorDiv.classList.add("author");  
-        let introAuthor = document.createElement("p");
-        let author = document.createElement("p");
+    // Create addEventListener to toggle read status
+    readButton.addEventListener('click', () => {
+      myLibrary[i].toggleRead();
+      updateReadButtonContent(myLibrary[i]);
+    });
 
-        // Create new elements about pages
-        let pagesDiv = document.createElement("div");
-        pagesDiv.classList.add("pages");
-        let introPages = document.createElement("p");
-        let pages = document.createElement("p");
-
-        // Create new elements about read and remove buttons
-        let buttonsDiv = document.createElement("div");
-        buttonsDiv.classList.add("book-buttons");
-        let readButton = document.createElement("button");
-        let removeButton = document.createElement("button");
-        removeButton.dataset.id = myLibrary[i].id;
-
-        // Add content to titleDiv and append it to bookDiv
-        introTitle.textContent = "Title";
-        titleDiv.appendChild(introTitle);
-        title.textContent = myLibrary[i].title;
-        titleDiv.appendChild(title);
-        bookDiv.appendChild(titleDiv);
-        
-        // Add content to authorDiv and append it to bookDiv
-        introAuthor.textContent = "Author";
-        authorDiv.appendChild(introAuthor);
-        author.textContent = myLibrary[i].author;
-        authorDiv.appendChild(author);
-        bookDiv.appendChild(authorDiv);
-
-        // Add content to pagesDiv and append it to bookDiv   
-        introPages.textContent = "Pages";
-        pagesDiv.appendChild(introPages);
-        pages.textContent = myLibrary[i].pages;
-        pagesDiv.appendChild(pages);
-        bookDiv.appendChild(pagesDiv);
-
-        // Add readButton and removeButton to readDiv and append it to bookDiv
-        updateReadButtonContent(myLibrary[i]);
-        buttonsDiv.appendChild(readButton);
-        removeButton.textContent = "remove";
-        buttonsDiv.appendChild(removeButton);
-        bookDiv.appendChild(buttonsDiv);
-
-        // Add bookDiv to library
-        library.appendChild(bookDiv);
-
-        // Update readButton content
-        function updateReadButtonContent(book) {
-            if (book.read === true) {
-                readButton.textContent = "read";
-                readButton.dataset.read = "true";
-            }
-            else {
-                readButton.textContent = "not read";
-                readButton.dataset.read = "false";
-                }
+    // Create addEventListener to remove book
+    removeButton.addEventListener('click', () => {
+      for (let i = 0; i < myLibrary.length; i++) {
+        if (myLibrary[i].id == removeButton.dataset.id) {
+          myLibrary.splice(i, 1);
+          break;
         }
-
-        // Create addEventListener to toggle read status
-        readButton.addEventListener("click", ()=> {
-            myLibrary[i].toggleRead();
-            updateReadButtonContent(myLibrary[i]);
-        })
-
-        // Create addEventListener to remove book
-        removeButton.addEventListener("click", ()=> {
-        for (let i = 0; i < myLibrary.length; i++) {
-            if (myLibrary[i].id == removeButton.dataset.id) {
-                myLibrary.splice(i, 1);
-                break;
-            }
-        }
-        displayLibrary();
-        })
-    }
+      }
+      displayLibrary();
+    });
+  }
 }
 
-const library = document.querySelector(".library");
-const newBook = document.querySelector("button");
-const form = document.querySelector("form");
+const library = document.querySelector('.library');
+const newBook = document.querySelector('button');
+const form = document.querySelector('form');
+const titleInput = document.getElementById('title');
+const authorInput = document.getElementById('author');
+const titleValidation = document.querySelector('.title .validation');
+const authorValidation = document.querySelector('.author .validation');
 
 // New book button clicked
-newBook.addEventListener("click", ()=> {
-    form.style.display = "flex";
-})
+newBook.addEventListener('click', () => {
+  form.style.display = 'flex';
+});
 
 // Submit form
-form.addEventListener("submit", function(event) {
-    event.preventDefault();
-    const title = document.getElementById("title").value;
-    const author = document.getElementById("author").value;
-    const pages = document.getElementById("pages").value;
-    const read = (document.querySelector("input[name='book-read']:checked").value === "true");
+form.addEventListener('submit', function (event) {
+  event.preventDefault();
+  authorInput.setCustomValidity('');
+  titleInput.setCustomValidity('');
+
+  if (titleInput.validity.valueMissing) {
+    titleValidation.textContent = "The book's title must be filled!";
+  }
+
+  if (authorInput.validity.valueMissing) {
+    authorValidation.textContent = 'The author name must be filled!';
+  }
+
+  if (form.checkValidity()) {
+    const title = document.getElementById('title').value;
+    const author = document.getElementById('author').value;
+    const pages = document.getElementById('pages').value;
+    const read =
+      document.querySelector("input[name='book-read']:checked").value ===
+      'true';
     addBookToLibrary(title, author, pages, read);
     displayLibrary();
-    form.style.display = "none";
+    form.style.display = 'none';
     // Clear the form after adding book
-    document.getElementById("title").value = "";
-    document.getElementById("author").value = "";
-    document.getElementById("pages").value = "";
-    document.getElementById("not-read").checked = "false";
-})
+    form.reset();
+    titleValidation.textContent = '';
+    authorValidation.textContent = '';
+  }
+});
